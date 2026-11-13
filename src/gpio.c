@@ -4,9 +4,32 @@
 // base GPIOA + OFFSET MODER (RM0390 Manual)
 static volatile uint32_t *gpioa_moder = (volatile uint32_t *) 0x40020000; // GPIO MODER OFF SET
 
+static uint32_t gpio_offset_ports[GPIO_COUNT] = {0x40020000, // A
+                                                 0x40020400, // B
+                                                 0x40020800, // C
+                                                 0x40020C00, // D
+                                                 0x40021C00}; // H
+
+
+static uint8_t check_port(uint8_t gpio_port)
+{
+    if (gpio_port < 0 || gpio_port >= GPIO_COUNT)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
 
 uint8_t gpio_set_mode(uint8_t gpio_port, uint8_t gpio_pin, gpio_mode mode)
 {
+    if (check_port(gpio_port) == 1)
+    {
+        return 1;
+    }
+
+
     // a port has only pins 0-15
     // larger values would shift by 32 or more bits 
     // (undefined behaviour INT34-C)

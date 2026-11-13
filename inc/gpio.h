@@ -1,8 +1,20 @@
 #ifndef GPIO_H
 #define GPIO_H
 
+
+
 #include <stdint.h>
 
+
+typedef enum
+{
+    GPIO_PA = 0,
+    GPIO_PB = 1,
+    GPIO_PC = 2,
+    GPIO_PD = 3,
+    GPIO_PH = 4,
+    GPIO_COUNT
+} gpio_port_set;
 
 
 typedef enum
