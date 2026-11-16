@@ -27,7 +27,7 @@ typedef enum
 } gpio_mode;
 
 
-uint8_t gpio_set_mode(uint8_t gpio_port, uint8_t gpio_pin, gpio_mode mode);
+uint8_t gpio_set_mode(gpio_port_set gpio_port, uint8_t gpio_pin, gpio_mode mode);
 
 
 #endif
