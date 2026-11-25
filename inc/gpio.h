@@ -4,6 +4,7 @@
 
 
 #include <stdint.h>
+#include <stddef.h>
 
 
 typedef enum
@@ -38,6 +39,8 @@ typedef enum
 uint8_t gpio_set_mode(gpio_port_set gpio_port, uint8_t gpio_pin, gpio_mode mode);
 
 uint8_t gpio_set_pin(gpio_port_set gpio_port, uint8_t gpio_pin, pin_on_off set_pin);
+
+uint8_t gpio_pin_button(gpio_port_set gpio_port, uint8_t gpio_pin, uint8_t *pin_state);
 
 
 #endif

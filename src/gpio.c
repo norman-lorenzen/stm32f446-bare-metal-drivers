@@ -103,3 +103,39 @@ uint8_t gpio_set_pin(gpio_port_set gpio_port, uint8_t gpio_pin, pin_on_off set_p
 
     return 0;
 }
+
+
+uint8_t gpio_pin_button(gpio_port_set gpio_port, uint8_t gpio_pin, uint8_t *pin_state)
+{
+    if (check_port(gpio_port) == 1u)
+    {
+        return 1;
+    }
+
+    // a port has only pins 0-15
+    // larger values would shift by 32 or more bits 
+    // (undefined behaviour INT34-C)
+    if (gpio_pin > 15u)
+    {
+        return 1;
+    }
+
+    // if is not valid 
+    // stop
+    if (pin_state == NULL)
+    {
+        return 1;
+    }
+
+
+    // 0x10u = idr offset adress
+    uintptr_t idr_address = gpio_offset_ports[gpio_port] + 0x10u;
+
+    volatile uint32_t *idr = (volatile uint32_t *) idr_address;
+
+    uint32_t idr_value = *idr;
+
+    *pin_state = (idr_value >> gpio_pin) & 1u;
+
+    return 0;
+}
