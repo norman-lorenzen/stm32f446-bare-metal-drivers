@@ -1,6 +1,8 @@
 // FLASH: 0x0800 0000 - 0x0807 FFFF (512 kB), code + vector table
 // RAM  : 0x2000 0000 - 0x2001 FFFF (128 kB), stack starts at top
 
+#include "systick.h"
+
 #include <stdint.h>
 
 // LINKER SCRIPT SECTIONS
@@ -12,6 +14,15 @@ extern uint32_t _ebss;
 
 
 int main(void);
+
+void Default_Handler(void)
+{
+    while (1)
+    {
+
+    }
+}
+
 
 void Reset_Handler(void)
 {
@@ -53,8 +64,22 @@ void Reset_Handler(void)
  */
 
 __attribute__((section(".isr_vector"), used))
-const uint32_t vector_table[2] =
+const uint32_t vector_table[16] =
 {
     0x20020000u,
-    (uint32_t)&Reset_Handler
+    (uint32_t)&Reset_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&Default_Handler,
+    (uint32_t)&SysTick_Handler
 };
